@@ -35,3 +35,4 @@ while True:
  
         GPIO.output(led_3, GPIO.LOW)
         time.sleep(0.1)
+GPIO.cleanup()
