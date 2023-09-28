@@ -4,7 +4,7 @@
 Simple Calculator
 --------------------------------------------------------------------------
 License:   
-Copyright 2023 - <NAME>
+Copyright 2023 - Vidal Saenz
 
 Redistribution and use in source and binary forms, with or without 
 modification, are permitted provided that the following conditions are met:
@@ -51,6 +51,7 @@ Error conditions:
 
 --------------------------------------------------------------------------
 """
+import operator
 
 # NOTE - Add import statements to allow access to Python library functions
 # NOTE - Hint:  Look at  https://docs.python.org/3/library/operator.html
@@ -70,6 +71,14 @@ Error conditions:
 operators = {
     # Dictionary syntax:  "key" : "value"
     #   i.e. "function" : operator.<function>
+    "+" : operator.add,     #addition operator
+    "-" : operator.sub,     #subtraction operator
+    "*" : operator.mul,     #multiplication operator
+    "/" : operator.truediv, #division operator
+    ">>": operator.rshift,  #right shift operator
+    "<<": operator.lshift,  #left shift operator
+    "%" : operator.mod,     #modular operator
+    "**": operator.pow,     #exponential operator
 }
 
 
@@ -87,12 +96,19 @@ def get_user_input():
     try:
         # NOTE - Use "pass" statements to allow code to be run without having to 
         # NOTE - fill out the contents.  This pass statement should be removed    
-        pass
+        number1 = float(input("Enter first number : "))
+        number2 = float(input("Enter second number: "))
+        #new operators added for user input below
+        op      = input("Enter function (valid values are +, -, *, /, <<, >>, %, **): ")
+        
+        func    = operators.get(op)
         
         # NOTE - User input is generally returned as a string and must be translated.
     except:
         print("Invalid Input")
         return (None, None, None)
+    
+    return (number1, number2, func)
 
 # End def
 
@@ -121,5 +137,12 @@ if __name__ == "__main__":
 
     # NOTE - Use "pass" statements to allow code to be run without having to 
     # NOTE - fill out the contents.  This pass statement should be removed    
-    pass
+    while True:
+        (num1, num2, func) = get_user_input()
+        
+        if (num1 == None) or (num2 == None) or (func == None):
+            print("Invalid input")
+            break
+        
+        print(func(num1, num2))
 
