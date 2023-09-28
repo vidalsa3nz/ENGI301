@@ -99,7 +99,7 @@ def get_user_input():
         number1 = float(input("Enter first number : "))
         number2 = float(input("Enter second number: "))
         #new operators added for user input below
-        op      = input("Enter function (valid values are +, -, *, /, <<, >>, %, **): ")
+        op      = input("Enter function (valid values are +, -, *, /, <<, >>, %, **): ") #new operators added for users
         
         func    = operators.get(op)
         
@@ -143,6 +143,15 @@ if __name__ == "__main__":
         if (num1 == None) or (num2 == None) or (func == None):
             print("Invalid input")
             break
+        
+        #Converts input number to integer to be used by right or left shift and outputs error if input is not an integer
+        if (func == operator.lshift or func == operator.rshift):
+            if (int(num1) != num1 or int(num2) != num2):
+                print("Invalid input")
+                break
+            else:
+                num1 = int(num1)
+                num2 = int(num2)
         
         print(func(num1, num2))
 
