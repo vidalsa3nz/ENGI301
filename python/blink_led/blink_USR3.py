@@ -25,14 +25,16 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMA
 import Adafruit_BBIO.GPIO as GPIO
 import time
 
+#creates variable corresponding to led on PB
 led_3 = "USR3"
-
+#initializes corresponding GPIO pin based on desired LED
 GPIO.setup(led_3, GPIO.OUT)
 
 while True:
+#Blinks LED at 5Hz
+        #Turns on LED for 0.1 s
         GPIO.output(led_3, GPIO.HIGH)
         time.sleep(0.1)
- 
+        #Turns off LED for 0.1s
         GPIO.output(led_3, GPIO.LOW)
         time.sleep(0.1)
-GPIO.cleanup()
