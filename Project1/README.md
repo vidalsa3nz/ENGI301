@@ -5,7 +5,7 @@ This device was created to automate the processes of watering plants and adjusti
 ## Table of Contents
 
 - [Features](#features)
-- [Installation](#installation)
+- [SetUp](#setup)
 - [Usage](#usage)
 
 
@@ -18,9 +18,9 @@ This device features a variety of sensors and other components to automate plant
 -LCD Screen
 -Peristaltic Pump
 
-## Installation
+## SetUp
 
-Provide instructions on how to install and set up your project. Include any dependencies and prerequisites.
+
 
 ## Usage
 
