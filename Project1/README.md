@@ -19,7 +19,7 @@ This device features a variety of sensors and other components to automate plant
 -Peristaltic Pump
 
 ## Set Up
-A full description of the device set up including how to build it and which sensors can be used can be found at the following Hackster page: [SipNSprout Hackster](https://www.hackster.io/511859/sip-n-sprout-automated-plant-device-cee9ff)
+A full description of the device set up including how to build it and which sensors can be used can be found at the following Hackster page: [Sip N' Sprout Hackster](https://www.hackster.io/511859/sip-n-sprout-automated-plant-device-cee9ff)
 
 
 ## Usage
