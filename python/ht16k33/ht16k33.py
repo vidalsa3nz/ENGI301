@@ -76,6 +76,7 @@ Background Information:
 import os
 
 
+
 # ------------------------------------------------------------------------
 # Constants
 # ------------------------------------------------------------------------
@@ -332,58 +333,93 @@ class HT16K33():
 # End class
 
 
+# Constants
+PHRASE = "BIOE CRL"
+DISPLAY_LENGTH = 4
+
+class SevenSegmentDisplayController:
+    def __init__(self, display):
+        self.display = display
+
+    def scroll_text(self, text):
+        # Pad the text to ensure smooth scrolling
+        padded_text = text + "    "
+        for i in range(len(padded_text) - DISPLAY_LENGTH + 1):
+            displayed_text = padded_text[i:i+DISPLAY_LENGTH]
+            self.display.text(displayed_text)
+            time.sleep(0.1)
+
+    def display_phrase(self):
+        while True:
+            for i in range(len(PHRASE) + 1):
+                combined_text = PHRASE + " " 
+                self.scroll_text(combined_text)
+
+    def run(self):
+        self.display_phrase()
+
 # ------------------------------------------------------------------------
 # Main script
 # ------------------------------------------------------------------------
 
 if __name__ == '__main__':
+    
     import time
+    # Initialize the HT16K33 display
+    # Assuming display is an instance of HT16K33 class (not provided in the snippet)
+    display = HT16K33(bus=1, address=0x70)
 
-    delay = 0.1
+    # Create an instance of the controller
+    controller = SevenSegmentDisplayController(display)
+
+    # Run the controller
+    controller.run()
     
-    print("Test HT16K33 Display:")
+#     delay = 0.1
     
-    display = HT16K33(1, 0x70)
+#     print("Test HT16K33 Display:")
+    
+#     display = HT16K33(1, 0x70)
 
-#     for i in range(0, 10):
-#         display.update(i)
-#         time.sleep(delay)
+# #     for i in range(0, 10):
+# #         display.update(i)
+# #         time.sleep(delay)
 
-#     for i in range(0, 100, 10):
-#         display.update(i)
-#         time.sleep(delay)
+# #     for i in range(0, 100, 10):
+# #         display.update(i)
+# #         time.sleep(delay)
 
-#     for i in range(0, 1000, 100):
-#         display.update(i)
-#         time.sleep(delay)
+# #     for i in range(0, 1000, 100):
+# #         display.update(i)
+# #         time.sleep(delay)
         
-#     for i in range(0, 10000, 1000):
-#         display.update(i)
-#         time.sleep(delay)
+# #     for i in range(0, 10000, 1000):
+# #         display.update(i)
+# #         time.sleep(delay)
 
-#     for value in [0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80, 0x00]:
-#         display.set_digit_raw(0, value)
-#         time.sleep(delay)
+# #     for value in [0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80, 0x00]:
+# #         display.set_digit_raw(0, value)
+# #         time.sleep(delay)
 
-#     # Test letters
-#     letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ?"
+# #     # Test letters
+# #     letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ?"
     
-#     for char in letters:
-#         try:
-#             display.text(char)
-#             time.sleep(delay)
-#         except:
-#             print("Character not supported:  {0}".format(char))
+# #     for char in letters:
+# #         try:
+# #             display.text(char)
+# #             time.sleep(delay)
+# #         except:
+# #             print("Character not supported:  {0}".format(char))
     
-#     display.text("done")
-#     time.sleep(1)
+# #     display.text("done")
+# #     time.sleep(1)
     
-#     display.set_colon(True)
-#     time.sleep(1)
+# #     display.set_colon(True)
+# #     time.sleep(1)
 
-#     display.clear()    
-#     print("Test Finished.")
-    display.text("SLUT")
+# #     display.clear()    
+# #     print("Test Finished.")
+#     display.text("")
 
 
 

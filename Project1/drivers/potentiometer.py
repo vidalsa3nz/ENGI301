@@ -1,6 +1,6 @@
 """
 --------------------------------------------------------------------------
-LED Driver
+Potentiometer Driver
 --------------------------------------------------------------------------
 License:   
 Copyright 2023 Vidal Saenz
@@ -31,68 +31,60 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 --------------------------------------------------------------------------
 
-LED Driver
-
-  This driver is built for LEDs that are connected directly to the processor pin 
-(i.e. the LED is ON when the output is "High"/"1" and OFF when the output is 
-"Low" / "0")
+Potentiometer Driver for PocketBeagle
 
 Software API:
 
-  LED(pin)
-    - Provide pin that the LED is connected
-    
-    is_on()
-      - Return a boolean value (i.e. True/False) if the LED is ON / OFF
+  Potentiometer(pin)
+    - Provide PocketBeagle pin that the potentiometer is connected
 
-    on()
-      - Turn the LED on
+  get_value()
+    - Returns the raw ADC value.  Integer in [0, 4095] 
 
-    off()
-      - Turn the LED off    
+  get_voltage()
+    - Returns the approximate voltage of the pin in volts
 
 """
-import Adafruit_BBIO.GPIO as GPIO
+import Adafruit_BBIO.ADC as ADC
 
 # ------------------------------------------------------------------------
 # Constants
 # ------------------------------------------------------------------------
 
-# None
+MIN_VALUE     = 0
+MAX_VALUE     = 4095
 
 # ------------------------------------------------------------------------
 # Global variables
 # ------------------------------------------------------------------------
 
-# None
+PINS_3V6 = ["P1_2", "P2_35"]
+PINS_1V8 = ["P1_19", "P1_21", "P1_23", "P1_25", "P1_27", "P2_36"]
 
 # ------------------------------------------------------------------------
 # Functions / Classes
 # ------------------------------------------------------------------------
 
-class LED():
-    """ LED Class """
+class Potentiometer():
+    """ Button Class """
     pin             = None
-    on_value        = None
-    off_value       = None
+    voltage         = None
     
-    def __init__(self, pin=None, active_high=True):
-        """ Initialize variables and set up the LED """
+    def __init__(self, pin=None, voltage=1.8):
+        """ Initialize variables and set up the potentiometer """
         if (pin == None):
-            raise ValueError("Pin not provided for LED()")
+            raise ValueError("Pin not provided for Potentiometer()")
         else:
             self.pin = pin
-        
-        # By default the values are determined by the active_high variable
-        if active_high:
-            self.on_value  = GPIO.HIGH
-            self.off_value = GPIO.LOW
-        else:
-            self.on_value  = GPIO.LOW
-            self.off_value = GPIO.HIGH  
-        
             
-
+        if pin in PINS_3V6:
+            self.voltage = 3.6
+        else:
+            self.voltage = 1.8
+            
+            if pin not in PINS_1V8:
+                print("WARNING:  Unknown pin {0}.  Setting voltage to 1.8V.".format(pin))
+        
         # Initialize the hardware components        
         self._setup()
     
@@ -101,49 +93,43 @@ class LED():
     
     def _setup(self):
         """ Setup the hardware components. """
-        # Initialize LED
-        GPIO.setup(self.pin, GPIO.OUT)
+        # Initialize Analog Input
+
+        # !!! NEED TO IMPLEMENT !!! #
+        ADC.setup()
         
-        
-        self.off()
 
     # End def
 
 
-    def is_on(self):
-        """ Is the LED on?
+    def get_value(self):
+        """ Get the value of the Potentiometer
         
-           Returns:  True  - LED is ON
-                     False - LED is OFF
+           Returns:  Integer in [0, 4095]
         """
+        # Read raw value from ADC
+
+        # !!! NEED TO IMPLEMENT !!! #
+        return int(ADC.read_raw(self.pin))
+        # !!! NEED TO IMPLEMENT !!! #
+
+    # End def
+
+    
+    def get_voltage(self):
+        """ Get the voltage of the pin
         
-        # !!! NEED TO IMPLEMENT !!! #
-        return GPIO.input(self.pin) == self.on_value 
-        # !!! NEED TO IMPLEMENT !!! #
-
-    # End def
-
+           Returns:  Float in volts
+        """
+        return ((self.get_value() / MAX_VALUE) * self.voltage)
     
-    def on(self):
-        """ Turn the LED ON """
-
-        GPIO.output(self.pin, self.on_value)
-    
-    # End def
+    # End def    
     
     
-    def off(self):
-        """ Turn the LED OFF """
-
-        GPIO.output(self.pin, self.off_value)
-    
-    # End def
-
-
     def cleanup(self):
-        """ Cleanup the hardware components. """
-        # Turn LED off 
-        self.off()
+        """Cleanup the hardware components."""
+        # Nothing to do for ADC
+        pass        
         
     # End def
 
@@ -158,66 +144,20 @@ class LED():
 if __name__ == '__main__':
     import time
 
-    print("LED Test")
+    print("Potentiometer Test")
 
-    # Create instantiation of the LED in active high configuration
-    led = LED("P2_4")
-    led2 = LED("P2_6")
-    led3 = LED("P2_10")
-    led4 = LED("P2_17")
-    led5 = LED("P2_19")
-    
+    # Create instantiation of the potentiometer
+    pot = Potentiometer("P1_19")
+
     # Use a Keyboard Interrupt (i.e. "Ctrl-C") to exit the test
     print("Use Ctrl-C to Exit")
     
     try:
         while(1):
-            # Turn LED ON
-            led.on()
-            print("LED ON? {0}".format(led.is_on()))
-            time.sleep(0.1)
-            
-            # Turn LED OFF
-            led.off()
-            print("LED ON? {0}".format(led.is_on()))
-            time.sleep(0.1)
-            
-            # Turn LED ON
-            led2.on()
-            print("LED ON? {0}".format(led2.is_on()))
-            time.sleep(0.1)
-            
-            # Turn LED OFF
-            led2.off()
-            print("LED ON? {0}".format(led2.is_on()))
-            time.sleep(0.1)
-            
-            led3.on()
-            print("LED ON? {0}".format(led3.is_on()))
-            time.sleep(0.1)
-            
-            # Turn LED OFF
-            led3.off()
-            print("LED ON? {0}".format(led3.is_on()))
-            time.sleep(0.1)
-            
-            led4.on()
-            print("LED ON? {0}".format(led4.is_on()))
-            time.sleep(0.1)
-            
-            # Turn LED OFF
-            led4.off()
-            print("LED ON? {0}".format(led4.is_on()))
-            time.sleep(0.1)
-            
-            led5.on()
-            print("LED ON? {0}".format(led5.is_on()))
-            time.sleep(0.1)
-            
-            # Turn LED OFF
-            led5.off()
-            print("LED ON? {0}".format(led5.is_on()))
-            time.sleep(0.1)
+            # Print potentiometer value
+            print("Value   = {0}".format(pot.get_value()))
+            print("Voltage = {0} V".format(pot.get_voltage()))
+            time.sleep(1)
         
     except KeyboardInterrupt:
         pass
