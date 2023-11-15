@@ -1,18 +1,22 @@
-# Project Name
+# Sip N' Sprout
 
-Brief description or introduction of your project.
+This device was created to automate the processes of watering plants and adjusting light brightness when needed and you may not be around.
 
 ## Table of Contents
 
 - [Features](#features)
 - [Installation](#installation)
 - [Usage](#usage)
-- [Contributing](#contributing)
-- [License](#license)
+
 
 ## Features
 
-List key features or functionalities of your project.
+This device features a variety of sensors and other components to automate plant caretaking tasks. These include:
+-Moisture Sensor
+-Light Sensor
+-LED Strip Lights
+-LCD Screen
+-Peristaltic Pump
 
 ## Installation
 
@@ -20,13 +24,7 @@ Provide instructions on how to install and set up your project. Include any depe
 
 ## Usage
 
-Explain how to use your project. Include examples or code snippets if applicable.
+This device operates on its own once connected to power. Simply put your plant on the platform and manually configure the pump tubes and moisture sensor to accomodate your plant
 
-## Contributing
 
-Provide guidelines for others who may want to contribute to your project. Include information about how to report issues or submit pull requests.
-
-## License
-
-Specify the license under which your project is distributed. For example, you might use the [MIT License](https://opensource.org/licenses/MIT).
 
